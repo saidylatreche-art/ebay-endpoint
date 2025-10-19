@@ -4,7 +4,7 @@ import hashlib
 app = Flask(__name__)
 
 VERIFICATION_TOKEN = "X9f7vR2pQ8kLm5tY1sDz4Wb6NcGjH0aVqUrBx3FhKpL"
-ENDPOINT_URL = "https://your-domain.com"  # Must match the eBay registered endpoint
+ENDPOINT_URL = "https://ebay-endpoint-8t69.onrender.com"  # Must match the eBay registered endpoint
 
 @app.route("/", methods=["GET"])
 def verify():
@@ -21,4 +21,5 @@ def verify():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 

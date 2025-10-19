@@ -2,15 +2,20 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Replace this with the "verification token" shown in eBay's developer console
-EBAY_VERIFICATION_TOKEN = "your_verification_token_here"
+# Simple health check route
+@app.route("/")
+def home():
+    return "eBay Endpoint is running!"
 
-@app.route("/", methods=["GET"])
-def verify():
-    challenge_code = request.args.get("challenge_code")
-    if challenge_code:
-        return jsonify({"challengeResponse": challenge_code + EBAY_VERIFICATION_TOKEN})
-    return "eBay Endpoint Running", 200
+# Endpoint to receive eBay notifications
+@app.route("/notifications", methods=["POST"])
+def notifications():
+    data = request.get_json()
+    print("Received notification:", data)  # for debugging
+    return jsonify({"status": "received"}), 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    # Bind to Render's port
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
